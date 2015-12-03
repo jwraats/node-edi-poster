@@ -91,7 +91,23 @@ var ZWAVE = {
 				}
 			}, function(data, response){
 				var objData = JSON.parse(data);
-				console.log(util.inspect(objData));
+				if(objData.data !== undefined && objData.data.devices !== undefined && objData.data.devices.length !== 0){
+					var devices = objData.data.devices;
+					devices.forEach(function(item){
+						//Fibaro Metering Wall Plug
+						if(item['deviceType'] === 'sensorMultilevel'){
+							if(item['metrics']['icon'] === 'energy'){
+								//UNTESTED!!
+								EDIAPI.addMeasurement(undefined, {
+									"sensorID": 1,	//TODO: EDI API ZwayID???
+									"value": item['metrics']['level'],
+									"measurementUnit": item['metrics']['scaleTitle']
+								});
+							}
+							//console.log(util.inspect(item));
+						}
+					});
+				}
 			});
 		}else{
 			if(ZWAVE.createCookie(config.usernameZWAVE, config.passwordZWAVE, ZWAVE.getDevices, args)){
