@@ -2,7 +2,7 @@ var util = require('util');
 var Client = require('node-rest-client').Client;
 
 client = new Client();
-var urlZWAVE 	= "http://192.168.178.16:8083/ZAutomation/api/v1/";
+var urlZWAVE 	= "http://127.0.0.1:8083/ZAutomation/api/v1/";
 var urlEDIAPI 	= "http://145.48.6.95:8080/api/";
 var config = {
 	usernameEDI: "ediuser",
@@ -35,7 +35,7 @@ var EDIAPI = {
 		if(token !== undefined){
 			client.post(urlEDIAPI+"measurements", {
 				data: {
-					"SensorID": args.sensorID,
+					"SensorDeviceidentifier": args.sdID,
 					"Value": args.value,
 					"MeasurementUnit": args.measurementUnit
 				}, 
@@ -96,15 +96,11 @@ var ZWAVE = {
 					devices.forEach(function(item){
 						//Fibaro Metering Wall Plug
 						if(item['deviceType'] === 'sensorMultilevel'){
-							if(item['metrics']['icon'] === 'energy'){
-								//UNTESTED!!
-								EDIAPI.addMeasurement(undefined, {
-									"sensorID": 1,	//TODO: EDI API ZwayID???
-									"value": item['metrics']['level'],
-									"measurementUnit": item['metrics']['scaleTitle']
-								});
-							}
-							//console.log(util.inspect(item));
+							EDIAPI.addMeasurement(undefined, {
+								"sdID": item['id'],
+								"value": item['metrics']['level'],
+								"measurementUnit": item['metrics']['scaleTitle']
+							});
 						}
 					});
 				}
