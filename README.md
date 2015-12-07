@@ -41,9 +41,15 @@ sudo crontab -e
 
 Add this to the text file:
  \* * * * * nodejs /home/pi/node-edi-poster-master/app.js
+ 
  \* * * * * sleep 10; nodejs /home/pi/node-edi-poster-master/app.js
+ 
  \* * * * * sleep 20; nodejs /home/pi/node-edi-poster-master/app.js
+ 
  \* * * * * sleep 30; nodejs /home/pi/node-edi-poster-master/app.js
+ 
  \* * * * * sleep 40; nodejs /home/pi/node-edi-poster-master/app.js
+ 
  \* * * * * sleep 50; nodejs /home/pi/node-edi-poster-master/app.js
+ 
 
