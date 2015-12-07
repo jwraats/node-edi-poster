@@ -40,6 +40,7 @@ nodejs app.js
 sudo crontab -e
 
 Add this to the text file:
+
  \* * * * * nodejs /home/pi/node-edi-poster-master/app.js
  
  \* * * * * sleep 10; nodejs /home/pi/node-edi-poster-master/app.js
